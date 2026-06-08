@@ -1,0 +1,212 @@
+/* ============================================================
+   xavpain.github.io — minimal terminal theme
+   headings: Geist Pixel (Square, vendored woff2)
+   body:     Geist Mono (Google Fonts)
+   ============================================================ */
+
+@font-face {
+  font-family: "Geist Pixel";
+  src: url("/fonts/GeistPixel-Square.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+:root {
+  --bg:        #0a0a0a;
+  --bg-elev:   #111213;
+  --line:      #232425;
+  --text:      #e6e6e6;
+  --muted:     #8a8f98;
+  --accent:    #7ee787;   /* terminal green */
+  --accent-dim:#2f6f3a;
+  --maxw:      720px;
+  --pad:       1.5rem;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 15px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* subtle scanline / grid texture */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.18;
+  z-index: 0;
+  mask-image: radial-gradient(circle at 50% 0%, #000 0%, transparent 70%);
+}
+
+.wrap {
+  position: relative;
+  z-index: 1;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--pad);
+}
+
+/* ---------- typography ---------- */
+
+h1, h2, h3, .pixel {
+  font-family: "Geist Pixel", "Geist Mono", monospace;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.25;
+}
+
+h1 { font-size: clamp(1.8rem, 6vw, 2.6rem); margin: 0 0 .25rem; }
+h2 { font-size: 1.35rem; margin: 2.5rem 0 1rem; color: var(--text); }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; }
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-dim);
+  transition: border-color .15s, color .15s;
+}
+a:hover { border-color: var(--accent); }
+
+p { margin: 0 0 1rem; }
+.muted { color: var(--muted); }
+
+/* ---------- nav ---------- */
+
+nav {
+  position: relative;
+  z-index: 1;
+  border-bottom: 1px solid var(--line);
+  background: rgba(10,10,10,.7);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+}
+nav .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+nav .brand {
+  font-family: "Geist Pixel", monospace;
+  font-size: 1rem;
+  color: var(--text);
+  border: none;
+}
+nav .brand::before { content: "> "; color: var(--accent); }
+nav .links { display: flex; gap: 1.25rem; }
+nav .links a {
+  color: var(--muted);
+  border: none;
+  font-size: .85rem;
+}
+nav .links a:hover,
+nav .links a[aria-current="page"] { color: var(--accent); }
+
+/* ---------- hero ---------- */
+
+.hero {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  padding: 4rem 0 2rem;
+}
+.hero img {
+  width: 104px;
+  height: 104px;
+  border-radius: 4px;
+  border: 1px solid var(--line);
+  image-rendering: auto;
+  flex-shrink: 0;
+}
+.hero .tagline { color: var(--accent); margin: .25rem 0 .75rem; }
+.hero .blurb { color: var(--muted); max-width: 42ch; }
+
+@media (max-width: 520px) {
+  .hero { flex-direction: column; align-items: flex-start; gap: 1rem; }
+}
+
+/* ---------- socials ---------- */
+
+.socials { display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap; }
+.socials a {
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: .35rem .75rem;
+  font-size: .85rem;
+}
+.socials a:hover { color: var(--accent); border-color: var(--accent-dim); }
+
+/* ---------- prompt rule ---------- */
+
+.rule {
+  color: var(--muted);
+  font-size: .8rem;
+  margin: 3rem 0 0;
+  border-top: 1px dashed var(--line);
+  padding-top: .75rem;
+}
+.rule::before { content: "// "; color: var(--accent-dim); }
+
+/* ---------- project cards ---------- */
+
+.projects { display: grid; gap: 1rem; margin: 1.5rem 0; }
+.card {
+  display: block;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 1.1rem 1.25rem;
+  color: var(--text);
+  border-bottom: 1px solid var(--line);
+  transition: border-color .15s, transform .15s;
+}
+.card:hover { border-color: var(--accent-dim); transform: translateY(-2px); }
+.card h3 { margin: 0 0 .35rem; color: var(--text); }
+.card h3 .arrow { color: var(--accent); }
+.card p { color: var(--muted); margin: 0 0 .75rem; font-size: .9rem; }
+.tags { display: flex; gap: .5rem; flex-wrap: wrap; }
+.tag {
+  font-size: .72rem;
+  color: var(--muted);
+  background: #0d0d0d;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: .1rem .45rem;
+}
+
+/* ---------- about ---------- */
+
+.stack { display: flex; flex-wrap: wrap; gap: .5rem; margin: .5rem 0 1rem; }
+ul.tight { padding-left: 1.2rem; }
+ul.tight li { margin: .25rem 0; color: var(--muted); }
+ul.tight li strong { color: var(--text); font-weight: 500; }
+
+/* ---------- footer ---------- */
+
+footer {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--line);
+  margin-top: 4rem;
+  padding: 1.5rem 0;
+  color: var(--muted);
+  font-size: .8rem;
+}
+footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem; }
